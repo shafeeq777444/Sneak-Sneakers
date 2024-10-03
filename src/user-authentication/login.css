@@ -1,0 +1,16 @@
+
+.logo{
+    width: 9rem;
+}
+*{overflow: hidden;}
+@media (max-width:768px){
+    .right{
+        display: none;
+    }
+    .logo{
+        margin-left: -2rem;
+        margin-top: -1rem;
+       
+    }
+}
+
