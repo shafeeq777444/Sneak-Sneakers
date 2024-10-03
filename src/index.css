@@ -90,7 +90,7 @@ img {
 /*=============== HEADER & NAV ===============*/
 /* Hide scrollbar for Chrome, Safari, and Opera */
 .scrollable {
-  overflow: hidden; /* Prevent the default scrollbar */
+  /* Prevent the default scrollbar */
   height: 100vh; /* Set a height for the scrollable container */
   position: relative; /* Allow positioning for child elements */
 }
@@ -113,6 +113,3 @@ body::-webkit-scrollbar {
   display: none; /* Hide scrollbar */
 }
 
-body {
-  overflow: scroll; /* Allow scrolling */
-}

@@ -33,7 +33,9 @@ const Login = () => {
   };
 
   return (
-    <div style={color}  className="flex h-screen flex-wrap">
+    
+   <div style={color} className=" 
+ flex h-screen flex-wrap">
       <div className="flex w-full flex-col md:w-1/2">
         <div className="flex justify-center pt-12 md:-mb-24 md:justify-start md:pl-12">
         <img className="logo" src="/assets/extra/logo.png"/> 
@@ -72,7 +74,7 @@ const Login = () => {
                     <Field type="checkbox" className="leading-loose text-pink-600" />
                     <span className="py-2 text-sm text-gray-600 leading-snug"> Remember Me </span>
                   </label>
-                  <label className="block text-gray-500 font-bold my-4">
+                  <label className="\">
                     <a href="#" className="cursor-pointer tracking-tighter text-black border-b-2 border-gray-200 hover:border-gray-400">
                       <span>Forgot Password?</span>
                     </a>

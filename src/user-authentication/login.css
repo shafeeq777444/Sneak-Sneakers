@@ -2,13 +2,13 @@
 .logo{
     width: 9rem;
 }
-*{overflow: hidden;}
+*{overflow-x: hidden;}
 @media (max-width:768px){
     .right{
         display: none;
     }
     .logo{
-        margin-left: -2rem;
+        margin-left: -3rem;
         margin-top: -1rem;
        
     }
