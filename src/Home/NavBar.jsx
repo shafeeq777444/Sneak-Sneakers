@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa"; // Import necessary icons
 import sneakLogo from '/assets/extra/logo.png';
 import './NavBar.css';
+import { CartContext } from "../cart/CartContext";
+import Profile from "../userProfile/Profile";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
+    const navigate=useNavigate()
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
-
+    const [profile,setProfile]=useState(false)
+    const {userData,cartItems}=useContext(CartContext)
+   
+    const handleProfile = () => setProfile(!profile);
     const handleScroll = () => {
         const scrollY = window.scrollY;
 
@@ -70,14 +77,16 @@ const NavBar = () => {
                             <FaSearch className="text-gray-600" />
                         </NavLink>
                         <Link to='/home/cart'>
+                        {cartItems.length}
                             <img className="w-6" src="/assets/extra/cart.png" alt="cart" />
                         </Link>
-                        <Link>
+                        <Link onClick={handleProfile}>
                             <img className="w-6" src="/assets/extra/user-profile.png" alt="user-profile" />
                         </Link>
                     </div>
                 </div>
             </header>
+           {(profile)?<Profile/>:<p></p>} 
         </div>
     );
 };

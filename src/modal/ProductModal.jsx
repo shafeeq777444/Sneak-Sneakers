@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./ProductModal.css";
-import { CartContext } from "../cart/cartContext";
+import { CartContext } from "../cart/CartContext";
 
 
 const ProductModal = ({ isOpen, onClose, product }) => {
@@ -19,7 +19,7 @@ const ProductModal = ({ isOpen, onClose, product }) => {
                 {product && (
                     <div className="modal-card">
                         <h2 className="modal-name">{product.name}</h2>
-                        <img src={product.pic} />
+                        <img src={product.pic[0]} />
                         <p className="modal-description">{product.description}</p>
                         <h2 className="modal-price">Price: ₹{product.price}</h2>
 

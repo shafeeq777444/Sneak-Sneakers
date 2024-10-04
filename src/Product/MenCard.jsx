@@ -7,14 +7,9 @@ const MenCard = () => {
 
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 p-4 justify-items-center mx-auto">
-      {menProducts.map(product => (
-        <ProductCard
-          key={product.id}
-          name={product.name}
-          price={product.price}
-          oldPrice={product.oldPrice} // Optional: only if there’s an old price
-          image={product.pic}
-          description={product.Description} // Optional: include if you need it
+      {menProducts.map((product,ind) => (
+        <ProductCard key={ind}
+          product={product}// Optional: include if you need it
         />
       ))}
     </div>

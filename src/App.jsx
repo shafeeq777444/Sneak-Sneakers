@@ -5,9 +5,10 @@ import Home from "./Home/Home.jsx";
 import MenCard from "./Product/MenCard";
 import WomenCard from "./Product/WomenCard";
 import { ProductProvider } from "./Product/ProductContext";
-import { CartProvider } from "./cart/cartContext";
+import { CartProvider } from "./cart/CartContext.jsx";
 import Cart from "./cart/Cart";
 import ResponsiveCarousel from '/src/Home/ResponsiveCarousel.jsx'
+import NavBar from "./Home/NavBar.jsx";
 
 function App() {
   return (

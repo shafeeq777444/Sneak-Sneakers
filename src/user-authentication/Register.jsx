@@ -12,6 +12,10 @@ const Register = () => {
     email: "",
     password: "",
     cpassword: "",
+    cart:[],
+    whishlist:[],
+    order:[],
+    orderSummary:[]
   };
   const color = {
     backgroundColor: 'white'

@@ -1,67 +1,77 @@
-import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { json } from "react-router-dom";
 
-// Create the Cart Context
 export const CartContext = createContext();
-
-// Create the Cart Provider component
 export const CartProvider = ({ children }) => {
-  // State to hold cart items
-  const [cartItems, setCartItems] = useState([]);
+    
+    const [cartItems, setCartItems] = useState(
+        []
+    ); /* if state changes the rendering will be occur so usestate will be worked */
+    const user = localStorage.getItem("user");
+        const userData = user ? JSON.parse(user) : null;
+    useEffect(() => {
+        
+        let userId=null
+        if(userData){
+            userId = userData.id;
+        }
+        
+        const c = { ...userData, cart: [...cartItems] };
 
-  // Load cart items from local storage when the component mounts
-  useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem('cartItems'));
-    if (savedCart) setCartItems(savedCart);
-  }, []);
+        const patchitem = async () => {
+            try {
+                const response = await axios.patch(`http://localhost:5001/users/${userId}`, { ...c });
 
-  // Save cart items to local storage whenever cartItems changes
-  useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }, [cartItems]);
+                console.log(response.data);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                console.log("cartItems update to db completed");
+            }
+        };
+        if (user) {
+            patchitem();
+        }
+    }, [cartItems.length]);
+    // addItems from modal
+    const addToCart = (product) => {
+        const existedItem = cartItems.find((item) => item.productCode == product.productCode);
+        // already exist item added into cart
+        if (existedItem) {
+            setCartItems(
+                cartItems.map((item) =>
+                    item.productCode == product.productCode ? { ...item, quantity: item.quantity + 1 } : item
+                )
+            );
+        }
+        // new item added into cart
+        else {
+            if(userData){
+            setCartItems([...cartItems, { ...product, quantity: 1 }]);}
+            else{
+                alert("please sign up")
+            }
+        }
+    };
+    // update quantity min:1 quantity occured
 
-  // Function to update the quantity of an item
-  const updateQuantity = (name, newQuantity) => {
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.name === name ? { ...item, quantity: Math.max(newQuantity, 0) } : item
-      )
-    );
-  };
-
-  // Function to remove an item from the cart
-  const removeItem = (name) => {
-    setCartItems((prev) => prev.filter((item) => item.name !== name));
-  };
-
-  // Function to add a product to the cart
-  const addToCart = (product) => {
-    setCartItems((prev) => {
-      // Check if the product already exists in the cart
-      const itemExists = prev.find((item) => item.name === product.name);
-
-      if (itemExists) {
-        // If it exists, increment the quantity
-        return prev.map((item) =>
-          item.name === product.name
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+        
+    
+    const updateCartItemQuantity = (product, value) => {
+        setCartItems(
+            cartItems.map((item) =>
+                item.productCode == product.productCode ? { ...item, quantity: Math.max(item.quantity + value, 1) } : item
+            )
         );
-      } else {
-        // If it doesn't exist, add it to the cart with quantity 1
-        return [...prev, { ...product, quantity: 1 }];
-      }
-    });
-  };
+    };
+    const removeCartItem = (product) => {
+        setCartItems(cartItems.filter((item) => item.productCode != product.productCode));
+    };
 
-  // Function to clear the cart
-  const clearCart = () => {
-    setCartItems([]);
-  };
-
-  // Provide state and functions to the context
-  return (
-    <CartContext.Provider value={{ cartItems, addToCart, updateQuantity, removeItem, clearCart }}>
-      {children}
-    </CartContext.Provider>
-  );
+    return (
+        <CartContext.Provider value={{addToCart, updateCartItemQuantity, removeCartItem, cartItems,userData }}>
+            {children}
+        </CartContext.Provider>
+    );
 };

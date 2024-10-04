@@ -2,7 +2,7 @@ import "./style.css";
 import React, { useState } from "react";
 import ProductModal from "../modal/ProductModal";
 
-const ProductCard = ({ name, price, oldPrice, image, description }) => {
+const ProductCard = ({product}) => {
     const [isModalOpen, setModalOpen] = useState(false);
     const handleCardClick = () => {
         setModalOpen(true);
@@ -19,12 +19,12 @@ const ProductCard = ({ name, price, oldPrice, image, description }) => {
                 <a className="relative  mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href="#">
                     <img
                         className="peer absolute top-0 right-0 h-full w-full object-cover"
-                        src={image[0]}
+                        src={product.pic[0]}
                         alt="product image"
                     />
                     <img
                         className="peer peer-hover:right-0 absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0"
-                        src={image[1]}
+                        src={product.pic[1]}
                         alt="product image"
                     />
                     <svg
@@ -43,17 +43,17 @@ const ProductCard = ({ name, price, oldPrice, image, description }) => {
                         />
                     </svg>
                     <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
-                        {parseInt(((oldPrice - price) / oldPrice) * 100)}% OFF
+                        {parseInt(((product.oldPrice - product.price) / product.oldPrice) * 100)}% OFF
                     </span>
                 </a>
                 <div className="mt-4 px-3 pb-4">
                     <a href="#">
-                        <h5 className="text-lg tracking-tight text-slate-900">{name}</h5>
+                        <h5 className="text-lg tracking-tight text-slate-900">{product.name}</h5>
                     </a>
                     <div className="mt-2 mb-3 flex items-center justify-between">
                         <p>
-                            <span className="text-2xl font-bold text-slate-900">₹{price}</span>
-                            {oldPrice && <span className="text-sm text-slate-900 line-through">₹{oldPrice}</span>}
+                            <span className="text-2xl font-bold text-slate-900">₹{product.price}</span>
+                            {product.oldPrice && <span className="text-sm text-slate-900 line-through">₹{product.oldPrice}</span>}
                         </p>
                     </div>
                 </div>
@@ -61,7 +61,7 @@ const ProductCard = ({ name, price, oldPrice, image, description }) => {
             <ProductModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
-                product={{ name, price, oldPrice, pic: image[0], description }}
+                product={product}
             ></ProductModal>
         </>
     );
